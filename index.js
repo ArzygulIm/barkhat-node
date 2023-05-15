@@ -11,6 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => {
+    res.setHeader("Access-Control-Allow-Credentials", "true");
     res.json("Server work")
 });
 
