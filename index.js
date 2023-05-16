@@ -8,6 +8,9 @@ mongoose.connect('mongodb+srv://admin:barkhat123@cluster0.dc9nwne.mongodb.net/ba
     .catch((err) => { console.log('DB error', err) });
 const app = express();
 
+const cors = require("cors");
+app.use(cors());
+
 app.use(express.json());
 
 app.use((req, res, next) => {
