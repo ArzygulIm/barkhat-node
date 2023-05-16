@@ -9,7 +9,9 @@ mongoose.connect('mongodb+srv://admin:barkhat123@cluster0.dc9nwne.mongodb.net/ba
     .catch((err) => { console.log('DB error', err) });
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: '*'
+}));
 
 app.use(express.json());
 
