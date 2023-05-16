@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors'
 import * as LineController from './controllers/lines.js'
 import * as ReportController from './controllers/reports.js'
 
@@ -8,7 +9,6 @@ mongoose.connect('mongodb+srv://admin:barkhat123@cluster0.dc9nwne.mongodb.net/ba
     .catch((err) => { console.log('DB error', err) });
 const app = express();
 
-const cors = require("cors");
 app.use(cors());
 
 app.use(express.json());
