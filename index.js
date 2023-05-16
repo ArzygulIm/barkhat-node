@@ -10,7 +10,8 @@ mongoose.connect('mongodb+srv://admin:barkhat123@cluster0.dc9nwne.mongodb.net/ba
 const app = express();
 
 app.use(cors({
-    origin: ['http://localhost:3000']
+    origin: ['http://localhost:3000'],
+    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 }));
 
 app.use(express.json());
