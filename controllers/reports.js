@@ -12,16 +12,49 @@ export const newReport = async (req, res) => {
             })
             if (sum >= line.quantity) {
                 let reasons = []
-                if (line.deadline !== line.reportPerHour[line.reportPerHour.length - 1].date) {
-                    line.reportPerHour.map(el => {
-                        if (el.workers / line.workers < 0.7) {
-                            reasons.push(`${el.date} го числа в ${el.hour} часы ${line.workers - el.workers / line.workers * 100} работников не было на месте`)
+                if (line.reportPerHour.length > 0) {
+                    if (line.deadline !== line.reportPerHour[line.reportPerHour.length - 1].date) {
+                        if (Number(line.reportPerHour[line.reportPerHour.length - 1].date.split(".")[2]) > Number(line.deadline.split(".")[2])) {
+                            console.log('if year > ')
+                            line.reportPerHour.map(el => {
+                                if (el.workers / line.workers < 0.7) {
+                                    reasons.push(`${el.date} го числа в ${el.hours} часы ${100 - el.workers / line.workers * 100}% работников не было на месте`)
+                                }
+                                if (el.description) {
+                                    reasons.push(`${el.date} го числа в ${el.hours} часы ${el.adminName} оставил комментарий "${el.description}"`)
+                                }
+                            })
+                        } else if (Number(line.reportPerHour[line.reportPerHour.length - 1].date.split(".")[2]) == Number(line.deadline.split(".")[2])) {
+                            console.log('if year = ')
+                            if (Number(line.reportPerHour[line.reportPerHour.length - 1].date.split(".")[1]) > Number(line.deadline.split(".")[1])) {
+                                console.log('if month > ')
+                                line.reportPerHour.map(el => {
+                                    if (el.workers / line.workers < 0.7) {
+                                        reasons.push(`${el.date} го числа в ${el.hours} часы ${100 - el.workers / line.workers * 100}% работников не было на месте`)
+                                    }
+                                    if (el.description) {
+                                        reasons.push(`${el.date} го числа в ${el.hours} часы ${el.adminName} оставил комментарий "${el.description}"`)
+                                    }
+                                })
+                            } else if (Number(line.reportPerHour[line.reportPerHour.length - 1].date.split(".")[1]) == Number(line.deadline.split(".")[1])) {
+                                console.log('if month = ')
+                                if (Number(line.reportPerHour[line.reportPerHour.length - 1].date.split(".")[0]) > Number(line.deadline.split(".")[0])) {
+                                    console.log('if day > ')
+                                    line.reportPerHour.map(el => {
+                                        if (el.workers / line.workers < 0.7) {
+                                            reasons.push(`${el.date} го числа в ${el.hours} часы ${100 - el.workers / line.workers * 100}% работников не было на месте`)
+                                        }
+                                        if (el.description) {
+                                            reasons.push(`${el.date} го числа в ${el.hours} часы ${el.adminName} оставил комментарий "${el.description}"`)
+                                        }
+                                    })
+                                }
+                            }
                         }
-                        if (el.description) {
-                            reasons.push(`${el.date} го числа в ${el.hour} часы ${el.adminName} оставил комментарий "${el.description}"`)
-                        }
-                    })
+                    }
                 }
+
+
                 report = {
                     model: line.model,
                     quantity: line.quantity,
@@ -32,6 +65,7 @@ export const newReport = async (req, res) => {
                     },
                     reasons,
                 }
+
                 const doc = new ReportModel(report);
                 const savedReport = await doc.save();
                 res.json(savedReport)
@@ -64,7 +98,7 @@ export const getReport = async (req, res) => {
                 res.status(404).json({
                     message: "Отчет не найден"
                 })
-            }else{
+            } else {
                 res.json(report)
             }
         })

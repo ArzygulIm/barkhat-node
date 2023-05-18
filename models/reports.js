@@ -27,7 +27,6 @@ const reportSchema = new mongoose.Schema(
         reasons: {
             type: Array,
         }
-
     },
     { versionKey: false }
 );

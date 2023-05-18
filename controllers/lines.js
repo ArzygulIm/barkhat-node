@@ -86,9 +86,9 @@ export const updateLine = async (req, res) => {
                     message: "Линия не найдена"
                 })
             }
-            let reportPerHour = line.reportPerHour
+            let reportPerHour = line.reportPerHour || []
             if(req.body.reportPerHour){
-                reportPerHour .push(req.body.reportPerHour)
+                reportPerHour.push(req.body.reportPerHour)
             }
             
             LineModel.updateOne({
