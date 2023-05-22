@@ -15,10 +15,9 @@ export const newReport = async (req, res) => {
                 if (line.reportPerHour.length > 0) {
                     if (line.deadline !== line.reportPerHour[line.reportPerHour.length - 1].date) {
                         if (Number(line.reportPerHour[line.reportPerHour.length - 1].date.split(".")[2]) > Number(line.deadline.split(".")[2])) {
-                            console.log('if year > ')
                             line.reportPerHour.map(el => {
                                 if (el.workers / line.workers < 0.7) {
-                                    reasons.push(`${el.date} го числа в ${el.hours} часы ${100 - el.workers / line.workers * 100}% работников не было на месте`)
+                                    reasons.push(`${el.date} го числа в ${el.hours} часы ${Math.round(100 - el.workers / line.workers * 100)}% работников не было на месте`)
                                 }
                                 if (el.description) {
                                     reasons.push(`${el.date} го числа в ${el.hours} часы ${el.adminName} оставил комментарий "${el.description}"`)
@@ -30,7 +29,7 @@ export const newReport = async (req, res) => {
                                 console.log('if month > ')
                                 line.reportPerHour.map(el => {
                                     if (el.workers / line.workers < 0.7) {
-                                        reasons.push(`${el.date} го числа в ${el.hours} часы ${100 - el.workers / line.workers * 100}% работников не было на месте`)
+                                        reasons.push(`${el.date} го числа в ${el.hours} часы ${Math.round(100 - el.workers / line.workers * 100)}% работников не было на месте`)
                                     }
                                     if (el.description) {
                                         reasons.push(`${el.date} го числа в ${el.hours} часы ${el.adminName} оставил комментарий "${el.description}"`)
@@ -42,7 +41,7 @@ export const newReport = async (req, res) => {
                                     console.log('if day > ')
                                     line.reportPerHour.map(el => {
                                         if (el.workers / line.workers < 0.7) {
-                                            reasons.push(`${el.date} го числа в ${el.hours} часы ${100 - el.workers / line.workers * 100}% работников не было на месте`)
+                                            reasons.push(`${el.date} го числа в ${el.hours} часы ${Math.round(100 - el.workers / line.workers * 100)}% работников не было на месте`)
                                         }
                                         if (el.description) {
                                             reasons.push(`${el.date} го числа в ${el.hours} часы ${el.adminName} оставил комментарий "${el.description}"`)
@@ -53,7 +52,6 @@ export const newReport = async (req, res) => {
                         }
                     }
                 }
-
 
                 report = {
                     model: line.model,
@@ -110,7 +108,7 @@ export const removeReport = async (req, res) => {
     try {
         const reportId = req.params.id;
 
-        await LineModel.findOneAndRemove({
+        await ReportModel.findOneAndRemove({
             _id: reportId
         })
         res.send({
