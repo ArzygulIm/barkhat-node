@@ -42,9 +42,13 @@ export const getLine = async (req, res) => {
                 res.status(404).json({
                     message: "Линия не найдена"
                 })
-            }else{
+            } else {
+                let sum = 0
+                line.reportPerHour.map(el => {
+                    sum = sum + el.quantity
+                })
                 days = (Number(line.deadline.split(".")[2]) - Number(line.startDate.split(".")[2])) * 313 + (Number(line.deadline.split(".")[1]) - Number(line.startDate.split(".")[1])) * 26 + Number(line.deadline.split(".")[0]) - Number(line.startDate.split(".")[0])
-                res.json({ ...line._doc, days })
+                res.json({ ...line._doc, days, sum })
             }
         })
     } catch (err) {
@@ -87,10 +91,10 @@ export const updateLine = async (req, res) => {
                 })
             }
             let reportPerHour = line.reportPerHour || []
-            if(req.body.reportPerHour){
+            if (req.body.reportPerHour) {
                 reportPerHour.push(req.body.reportPerHour)
             }
-            
+
             LineModel.updateOne({
                 _id: lineId
             }, {
