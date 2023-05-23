@@ -10,14 +10,14 @@ mongoose.connect('mongodb+srv://admin:barkhat123@cluster0.dc9nwne.mongodb.net/ba
 const app = express();
 
 app.use(cors({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', "https://barkhat.surge.sh"],
     methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 }));
 
 app.use(express.json());
 
 app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000", "https://barkhat.surge.sh");
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.header(
         "Access-Control-Allow-Headers",
