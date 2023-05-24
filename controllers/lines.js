@@ -47,8 +47,7 @@ export const getLine = async (req, res) => {
                 line.reportPerHour.map(el => {
                     sum = sum + el.quantity
                 })
-                days = (Number(line.deadline.split(".")[2]) - Number(line.startDate.split(".")[2])) * 313 + (Number(line.deadline.split(".")[1]) - Number(line.startDate.split(".")[1])) * 26 + Number(line.deadline.split(".")[0]) - Number(line.startDate.split(".")[0])
-                
+                days = (Number(line.deadline.split(".")[2]) - Number(line.startDate.split(".")[2])) * 313 + (Number(line.deadline.split(".")[1]) - Number(line.startDate.split(".")[1])) * 26 + Number(line.deadline.split(".")[0]) - Number(line.startDate.split(".")[0]) + 1
                 res.json({ ...line._doc, days, sum })
             }
         })
