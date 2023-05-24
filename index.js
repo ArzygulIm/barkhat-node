@@ -10,7 +10,7 @@ mongoose.connect('mongodb+srv://admin:barkhat123@cluster0.dc9nwne.mongodb.net/ba
 const app = express();
 
 app.use(cors({
-    origin: ["https://barkhat.surge.sh", "https://barkhat-react-app.onrender.com", "http://localhost:3000", "https://barkhat-client.onrender.com"],
+    origin: ["https://barkhat.surge.sh", "https://barkhat-react-app.onrender.com", "http://localhost:3000", "https://barkhat-client.onrender.com", "http://localhost:3001"],
     methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 }));
 
